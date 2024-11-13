@@ -6,11 +6,10 @@ contract SupplyChain {
     address public Owner;
 
     //note this constructor will be called when smart contract will be deployed on blockchain
-    constructor() public {
+    constructor() public{
         Owner = msg.sender;
     }
 
-    //Roles (flow of pharma supply chain)
     // RawMaterialSupplier; //This is where Manufacturer will get raw materials to make medicines
     // Manufacturer;  //Various WHO guidelines should be followed by this person
     // Distributor; //This guy distributes the medicines to retailers
@@ -61,24 +60,27 @@ contract SupplyChain {
 
     //To show status to client applications
     function showStage(uint256 _medicineID)
-        public
-        view
-        returns (string memory)
-    {
-        require(medicineCtr > 0);
-        if (MedicineStock[_medicineID].stage == STAGE.Init)
-            return "Medicine Ordered";
-        else if (MedicineStock[_medicineID].stage == STAGE.RawMaterialSupply)
-            return "Raw Material Supply Stage";
-        else if (MedicineStock[_medicineID].stage == STAGE.Manufacture)
-            return "Manufacturing Stage";
-        else if (MedicineStock[_medicineID].stage == STAGE.Distribution)
-            return "Distribution Stage";
-        else if (MedicineStock[_medicineID].stage == STAGE.Retail)
-            return "Retail Stage";
-        else if (MedicineStock[_medicineID].stage == STAGE.sold)
-            return "Medicine Sold";
-    }
+    public
+    view
+    returns (string memory)
+{
+    require(medicineCtr > 0, "No medicines found.");
+    if (MedicineStock[_medicineID].stage == STAGE.Init)
+        return "Medicine Ordered";
+    else if (MedicineStock[_medicineID].stage == STAGE.RawMaterialSupply)
+        return "Raw Material Supply Stage";
+    else if (MedicineStock[_medicineID].stage == STAGE.Manufacture)
+        return "Manufacturing Stage";
+    else if (MedicineStock[_medicineID].stage == STAGE.Distribution)
+        return "Distribution Stage";
+    else if (MedicineStock[_medicineID].stage == STAGE.Retail)
+        return "Retail Stage";
+    else if (MedicineStock[_medicineID].stage == STAGE.sold)
+        return "Medicine Sold";
+    else
+        return "Unknown Stage";  // Default case
+}
+
 
     //To store information about raw material supplier
     struct rawMaterialSupplier {
